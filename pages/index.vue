@@ -169,12 +169,18 @@
           </tr> -->
         </tbody>
       </table>
-      <div class="mt-4 flex justify-end">
+      <div class="mt-4 flex justify-end space-x-4">
         <button
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           @click="addRow"
         >
-          Selesai isi dan tambah jadwal
+          Selesai ini pengajar dan tambah lagi
+        </button>
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          @click="makeSchedule"
+        >
+          Buat jadwal
         </button>
       </div>
     </div>
@@ -197,7 +203,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="row in inputSchedules" :key="row.name">
+          <tr v-for="row in inputSchedules" :key="row.id">
             <td class="border px-4 py-2">{{ row.name }}</td>
             <td class="border px-4 py-2">{{ row.hour }}</td>
             <td class="border px-4 py-2">?</td>
@@ -263,7 +269,6 @@ export default {
       let lastId = this.inputSchedules.length + 1
       copyNewSchedule.id = lastId++
       copyNewSchedule.hour = +copyNewSchedule.hour
-      console.log('this.defaultSchedule')
       this.newSchedule = {
         id: 0,
         name: 'Tes Nama',
@@ -278,6 +283,9 @@ export default {
         }
       }
       this.inputSchedules.push(copyNewSchedule)
+    },
+    makeSchedule() {
+      console.log('makeSchedule')
     }
   },
   head: {
