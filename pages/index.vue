@@ -282,15 +282,15 @@ export default {
       ],
       defaultSchedule: {
         id: 0,
-        name: 'Tes Nama',
-        hour: 2,
+        name: '',
+        hour: 0,
         days: {
           monday: false,
-          tuesday: true,
+          tuesday: false,
           wednesday: false,
-          thursday: true,
+          thursday: false,
           friday: false,
-          saturday: true
+          saturday: false
         }
       },
       newSchedule: {},
@@ -302,15 +302,15 @@ export default {
   created() {
     this.newSchedule = {
       id: 0,
-      name: 'Tes Nama',
-      hour: 2,
+      name: '',
+      hour: 0,
       days: {
         monday: false,
-        tuesday: true,
+        tuesday: false,
         wednesday: false,
-        thursday: true,
+        thursday: false,
         friday: false,
-        saturday: true
+        saturday: false
       }
     }
 
@@ -324,15 +324,15 @@ export default {
       copyNewSchedule.hour = +copyNewSchedule.hour
       this.newSchedule = {
         id: 0,
-        name: 'Tes Nama',
-        hour: 2,
+        name: '',
+        hour: 0,
         days: {
           monday: false,
-          tuesday: true,
+          tuesday: false,
           wednesday: false,
-          thursday: true,
+          thursday: false,
           friday: false,
-          saturday: true
+          saturday: false
         }
       }
       this.inputSchedules.push(copyNewSchedule)
@@ -365,8 +365,34 @@ export default {
       this.inputSchedules.map((e) => (count += e.hour))
       return count
     },
+    countHourInSchedule(arr) {
+      let count = 0
+      arr.map((e) => (count += e.hour))
+      return count
+    },
     makeSchedule() {
-      console.log('makeSchedule')
+      // pilih random array
+      // sampai ketemu 48 jam
+      // yang sudah 48, keluarkan dari array
+      // const maxHour = 48
+      // let currentHour = 0
+      // const currentSchedules = { ...this.inputSchedules }
+      // const randomSchedules = []
+      // while (currentHour !== maxHour) {
+      //   for (let index = 0; index < currentSchedules.length; index++) {
+      //     const randomIndex = Math.floor(
+      //       Math.random() * currentSchedules.length
+      //     )
+      //     const element = this.inputSchedules[randomIndex]
+      //     currentSchedules.splice(currentSchedules, 1)
+      //     randomSchedules.push(element)
+      //     console.log(randomIndex)
+      //   }
+      //   currentHour = this.countHourInSchedule(randomSchedules)
+      //   console.log(currentHour)
+      // }
+      // console.log('makeSchedule')
+      // console.log(randomSchedules)
     }
   },
   head: {
