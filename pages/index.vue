@@ -207,8 +207,7 @@
       <table class="w-full table-auto">
         <thead class="text-gray-800">
           <tr>
-            <th class="px-4 py-2 border">Nama Instruktur</th>
-            <th class="px-4 py-2 border">Jam Pelatihan</th>
+            <th class="px-4 py-2 border">Waktu</th>
             <th class="px-4 py-2 border">Senin</th>
             <th class="px-4 py-2 border">Selasa</th>
             <th class="px-4 py-2 border">Rabu</th>
@@ -218,10 +217,13 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="row in nextWeekSchedules" :key="row.id">
-            <td class="px-4 py-2 border">{{ row.name }}</td>
-            <td class="px-4 py-2 border">{{ row.hour }}</td>
-            <td class="px-4 py-2 border">?</td>
+          <tr v-for="schedule in nextWeekSchedulesInTable" :key="schedule.id">
+            <td class="px-4 py-2 border">
+              {{ schedule.range }}
+            </td>
+            <td class="px-4 py-2 border">
+              {{ schedule.monday ? schedule.monday.name : '-' }}
+            </td>
             <td class="px-4 py-2 border">?</td>
             <td class="px-4 py-2 border">?</td>
             <td class="px-4 py-2 border">?</td>
@@ -312,7 +314,8 @@ export default {
       newSchedule: {},
       inputSchedules: [],
       nextWeekSchedules: [],
-      nextWeekPostponedSchedules: []
+      nextWeekPostponedSchedules: [],
+      nextWeekSchedulesInTable: []
     }
   },
   created() {
@@ -354,7 +357,7 @@ export default {
       this.inputSchedules.push(copyNewSchedule)
     },
     populate() {
-      for (let index = 1; index <= 40; index++) {
+      for (let index = 1; index <= 35; index++) {
         this.inputSchedules.push({
           id: index,
           name: `Instruktur ${index}`,
@@ -432,6 +435,8 @@ export default {
         this.nextWeekSchedules = nextWeekSchedules
       }
 
+      // console.log(this.nextWeekSchedules.length)
+
       // cari jadwal minggu tertunda
 
       const remainingSchedules = this.inputSchedules.filter(
@@ -440,22 +445,72 @@ export default {
       // console.log(remainingSchedules)
       this.nextWeekPostponedSchedules = remainingSchedules
 
-      // const randomSchedules = []
-      // while (currentHour !== maxHour) {
-      //   for (let index = 0; index < currentSchedules.length; index++) {
-      //     const randomIndex = Math.floor(
-      //       Math.random() * currentSchedules.length
-      //     )
-      //     const element = this.inputSchedules[randomIndex]
-      //     currentSchedules.splice(currentSchedules, 1)
-      //     randomSchedules.push(element)
-      //     console.log(randomIndex)
-      //   }
-      //   currentHour = this.countHourInSchedule(randomSchedules)
-      //   console.log(currentHour)
+      console.log(this.nextWeekSchedules)
+      // populate table
+
+      const copyNextWeekSchedules = [...this.nextWeekSchedules]
+
+      const mondays = []
+      const tuesdays = []
+      const wednesdays = []
+      const thursdays = []
+      const fridays = []
+      const saturdays = []
+
+      while (copyNextWeekSchedules.length > 0) {
+        const schedule = copyNextWeekSchedules.shift()
+
+        if (schedule.days.monday) mondays.push(schedule)
+        if (schedule.days.tuesday) tuesdays.push(schedule)
+        if (schedule.days.wednesday) wednesdays.push(schedule)
+        if (schedule.days.thursday) thursdays.push(schedule)
+        if (schedule.days.friday) fridays.push(schedule)
+        if (schedule.days.saturday) saturdays.push(schedule)
+      }
+
+      // make table content
+      const dailySchedules = []
+
+      let c = 0
+      thursdays.map((e) => (c += e.hour))
+      console.log(thursdays)
+      console.log(c)
+
+      //* cara menaruh jadwalnya gimana
+
+      // const mondaySchedule = []
+      // for (let index = 0; index < 16; index++) {
+      //   const monday = mondays.shift()
+      //   const tuesday = tuesdays.shift()
+      //   const wednesday = wednesdays.shift()
+      //   const thursday = thursdays.shift()
+      //   const friday = fridays.shift()
+      //   const saturday = saturdays.shift()
+
+      //   dailySchedules.push({
+      //     range: 'time range',
+      //     monday: mondays.shift(),
+      //     tuesday: tuesdays.shift(),
+      //     wednesday: wednesdays.shift(),
+      //     thursday: thursdays.shift(),
+      //     friday: fridays.shift(),
+      //     saturday: saturdays.shift()
+      //   })
       // }
-      // console.log('makeSchedule')
-      // console.log(randomSchedules)
+
+      // console.log(mondays)
+      // console.log(dailySchedules)
+      // this.nextWeekSchedulesInTable = dailySchedules
+
+      // timeRange: `${this.moment('08:00', 'H:mm').format(
+      //       'H:mm'
+      //     )} - ${this.moment('09:00', 'H:mm').format('H:mm')}`,
+      //     monday: schedule.days.monday ? schedule.name : '',
+      //     tuesday: schedule.days.tuesday ? schedule.name : '',
+      //     wednesday: schedule.days.wednesday ? schedule.name : '',
+      //     thursday: schedule.days.thursday ? schedule.name : '',
+      //     friday: schedule.days.friday ? schedule.name : '',
+      //     saturday: schedule.days.saturday ? schedule.name : ''
     }
   },
   head: {
