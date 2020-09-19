@@ -221,14 +221,20 @@
             <td class="px-4 py-2 border">
               {{ schedule.range }}
             </td>
-            <td class="px-4 py-2 border">
-              {{ schedule.monday ? schedule.monday.name : '-' }}
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.monday }}</td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.tuesday }}
             </td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.wednesday }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.thursday }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.friday }}</td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.saturday }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -249,8 +255,7 @@
       <table class="w-full table-auto">
         <thead class="text-gray-800">
           <tr>
-            <th class="px-4 py-2 border">Nama Instruktur</th>
-            <th class="px-4 py-2 border">Jam Pelatihan</th>
+            <th class="px-4 py-2 border">Waktu</th>
             <th class="px-4 py-2 border">Senin</th>
             <th class="px-4 py-2 border">Selasa</th>
             <th class="px-4 py-2 border">Rabu</th>
@@ -260,15 +265,27 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="row in nextWeekPostponedSchedules" :key="row.id">
-            <td class="px-4 py-2 border">{{ row.name }}</td>
-            <td class="px-4 py-2 border">{{ row.hour }}</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
-            <td class="px-4 py-2 border">?</td>
+          <tr
+            v-for="schedule in nextWeekPostponedSchedulesInTable"
+            :key="schedule.id"
+          >
+            <td class="px-4 py-2 border">
+              {{ schedule.range }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.monday }}</td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.tuesday }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.wednesday }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.thursday }}
+            </td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.friday }}</td>
+            <td class="px-4 py-2 text-red-500 border">
+              {{ schedule.saturday }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -315,7 +332,8 @@ export default {
       inputSchedules: [],
       nextWeekSchedules: [],
       nextWeekPostponedSchedules: [],
-      nextWeekSchedulesInTable: []
+      nextWeekSchedulesInTable: [],
+      nextWeekPostponedSchedulesInTable: []
     }
   },
   created() {
@@ -445,36 +463,36 @@ export default {
       // console.log(remainingSchedules)
       this.nextWeekPostponedSchedules = remainingSchedules
 
-      console.log(this.nextWeekSchedules)
+      // console.log(this.nextWeekSchedules)
       // populate table
 
-      const copyNextWeekSchedules = [...this.nextWeekSchedules]
+      // const copyNextWeekSchedules = [...this.nextWeekSchedules]
 
-      const mondays = []
-      const tuesdays = []
-      const wednesdays = []
-      const thursdays = []
-      const fridays = []
-      const saturdays = []
+      // const mondays = []
+      // const tuesdays = []
+      // const wednesdays = []
+      // const thursdays = []
+      // const fridays = []
+      // const saturdays = []
 
-      while (copyNextWeekSchedules.length > 0) {
-        const schedule = copyNextWeekSchedules.shift()
+      // while (copyNextWeekSchedules.length > 0) {
+      //   const schedule = copyNextWeekSchedules.shift()
 
-        if (schedule.days.monday) mondays.push(schedule)
-        if (schedule.days.tuesday) tuesdays.push(schedule)
-        if (schedule.days.wednesday) wednesdays.push(schedule)
-        if (schedule.days.thursday) thursdays.push(schedule)
-        if (schedule.days.friday) fridays.push(schedule)
-        if (schedule.days.saturday) saturdays.push(schedule)
-      }
+      //   if (schedule.days.monday) mondays.push(schedule)
+      //   if (schedule.days.tuesday) tuesdays.push(schedule)
+      //   if (schedule.days.wednesday) wednesdays.push(schedule)
+      //   if (schedule.days.thursday) thursdays.push(schedule)
+      //   if (schedule.days.friday) fridays.push(schedule)
+      //   if (schedule.days.saturday) saturdays.push(schedule)
+      // }
 
       // make table content
-      const dailySchedules = []
+      // const dailySchedules = []
 
-      let c = 0
-      thursdays.map((e) => (c += e.hour))
-      console.log(thursdays)
-      console.log(c)
+      // let c = 0
+      // thursdays.map((e) => (c += e.hour))
+      // console.log(thursdays)
+      // console.log(c)
 
       //* cara menaruh jadwalnya gimana
 
@@ -511,6 +529,23 @@ export default {
       //     thursday: schedule.days.thursday ? schedule.name : '',
       //     friday: schedule.days.friday ? schedule.name : '',
       //     saturday: schedule.days.saturday ? schedule.name : ''
+
+      const initTime = this.$moment('08:00', 'H:mm')
+      for (let index = 0; index < 8; index++) {
+        const dailySchedule = {
+          range: `${initTime.format('H:mm')} - ${initTime
+            .add(1, 'hours')
+            .format('H:mm')}`,
+          monday: 'Not Implemented Error',
+          tuesday: 'Not Implemented Error',
+          wednesday: 'Not Implemented Error',
+          thursday: 'Not Implemented Error',
+          friday: 'Not Implemented Error',
+          saturday: 'Not Implemented Error'
+        }
+        this.nextWeekSchedulesInTable.push(dailySchedule)
+        this.nextWeekPostponedSchedulesInTable.push(dailySchedule)
+      }
     }
   },
   head: {
