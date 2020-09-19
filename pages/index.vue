@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto p-4">
     <div class="text-center pt-10 pb-5">
-      <h1 class="text-green-500 font-bold text-5xl">Smart Schedule</h1>
+      <h1 class="text-green-500 font-bold text-5xl">Smart Schedule System</h1>
     </div>
     <div class="py-4">
       <div class="py-4">
@@ -68,7 +68,7 @@
           </template>
 
           <!-- input row -->
-          <tr>
+          <tr v-if="currentInputScheduleTimeLength() <= 60">
             <td class="border px-4 py-2"></td>
             <td class="border px-4 py-2">
               <input
@@ -165,34 +165,78 @@
               </select>
             </td>
           </tr>
-          <!-- <tr v-for="item in inputSchedules" v-else :key="item.name">
-            <td class="border px-4 py-2">{{ item.name }}</td>
-            <td class="border px-4 py-2">{{ item.hour }}</td>
-            <td v-for="day in item.days" :key="day" class="border px-4 py-2">
-              {{ day }}
-            </td>
-          </tr> -->
+
+          <tr v-else>
+            <p>
+              Total jam sudah lebih dari 60 jam
+            </p>
+          </tr>
         </tbody>
       </table>
-      <div class="mt-4 flex justify-end space-x-4">
-        <button
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          @click="addRow"
-        >
-          Selesai ini pengajar dan tambah lagi
-        </button>
-        <button
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          @click="makeSchedule"
-        >
-          Buat jadwal
-        </button>
+      <div class="mt-4 flex justify-between items-start">
+        <div class="flex justify-start flex-col">
+          <p>Total jam: {{ currentInputScheduleTimeLength() }}</p>
+          <p>Maksimal jam: 60/61/62</p>
+        </div>
+        <div class="flex justify-end space-x-4">
+          <button
+            v-if="currentInputScheduleTimeLength() <= 60"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            @click="addRow"
+          >
+            Selesai dan tambah jadwal
+          </button>
+          <button
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            @click="makeSchedule"
+          >
+            Buat jadwal minggu depan
+          </button>
+        </div>
       </div>
     </div>
 
+    <!-- next week -->
     <div class="py-4">
       <div class="py-4">
-        <h2 class="text-green-500 font-medium text-2xl">Form Hasil</h2>
+        <h2 class="text-green-500 font-medium text-2xl">
+          Form Jadwal Minggu Depan
+        </h2>
+      </div>
+      <table class="table-auto w-full">
+        <thead class="text-gray-800">
+          <tr>
+            <th class="border px-4 py-2">Nama Instruktur</th>
+            <th class="border px-4 py-2">Jam Pelatihan</th>
+            <th class="border px-4 py-2">Senin</th>
+            <th class="border px-4 py-2">Selasa</th>
+            <th class="border px-4 py-2">Rabu</th>
+            <th class="border px-4 py-2">Kamis</th>
+            <th class="border px-4 py-2">Jumat</th>
+            <th class="border px-4 py-2">Sabtu</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr v-for="row in inputSchedules" :key="row.id">
+            <td class="border px-4 py-2">{{ row.name }}</td>
+            <td class="border px-4 py-2">{{ row.hour }}</td>
+            <td class="border px-4 py-2">?</td>
+            <td class="border px-4 py-2">?</td>
+            <td class="border px-4 py-2">?</td>
+            <td class="border px-4 py-2">?</td>
+            <td class="border px-4 py-2">?</td>
+            <td class="border px-4 py-2">?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- next week postponed -->
+    <div class="py-4">
+      <div class="py-4">
+        <h2 class="text-green-500 font-medium text-2xl">
+          Form Jadwal Minggu Depan (Tertunda)
+        </h2>
       </div>
       <table class="table-auto w-full">
         <thead class="text-gray-800">
@@ -250,7 +294,9 @@ export default {
         }
       },
       newSchedule: {},
-      inputSchedules: []
+      inputSchedules: [],
+      nextWeekSchedules: [],
+      nextWeekPostponedSchedules: []
     }
   },
   created() {
@@ -267,6 +313,8 @@ export default {
         saturday: true
       }
     }
+
+    this.populate()
   },
   methods: {
     addRow() {
@@ -289,12 +337,40 @@ export default {
       }
       this.inputSchedules.push(copyNewSchedule)
     },
+    populate() {
+      for (let index = 1; index <= 40; index++) {
+        this.inputSchedules.push({
+          id: index,
+          name: `Instruktur ${index}`,
+          hour: this.randomHour(),
+          days: {
+            monday: this.randomBoolean(),
+            tuesday: this.randomBoolean(),
+            wednesday: this.randomBoolean(),
+            thursday: this.randomBoolean(),
+            friday: this.randomBoolean(),
+            saturday: this.randomBoolean()
+          }
+        })
+      }
+    },
+    randomHour() {
+      return Math.floor(Math.random() * 3) + 1
+    },
+    randomBoolean() {
+      return Math.random() >= 0.5
+    },
+    currentInputScheduleTimeLength() {
+      let count = 0
+      this.inputSchedules.map((e) => (count += e.hour))
+      return count
+    },
     makeSchedule() {
       console.log('makeSchedule')
     }
   },
   head: {
-    title: 'Smart Schedule',
+    title: 'Smart Schedule System',
     description: 'Penjadwalan otomatis dengan JavaScript.'
   }
 }
