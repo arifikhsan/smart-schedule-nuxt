@@ -1,73 +1,43 @@
 <template>
-  <div class="container">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center py-10">
+      <h1 class="text-green-500 font-bold text-5xl">Smart Schedule</h1>
+    </div>
     <div>
-      <logo />
-      <h1 class="title">
-        smart-schedule-nuxt
-      </h1>
-      <h2 class="subtitle">
-        My doozie Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">Nama Instruktur</th>
+            <th class="px-4 py-2">Jumlah Jam Pelatihan</th>
+            <th class="px-4 py-2">Senin</th>
+            <th class="px-4 py-2">Selasa</th>
+            <th class="px-4 py-2">Rabu</th>
+            <th class="px-4 py-2">Kamis</th>
+            <th class="px-4 py-2">Jumat</th>
+            <th class="px-4 py-2">Sabtu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2">Intro to CSS</td>
+            <td class="border px-4 py-2">Adam</td>
+            <td class="border px-4 py-2">858</td>
+          </tr>
+          <tr class="bg-gray-100">
+            <td class="border px-4 py-2">
+              A Long and Winding Tour of the History of UI Frameworks and Tools
+              and the Impact on Design
+            </td>
+            <td class="border px-4 py-2">Adam</td>
+            <td class="border px-4 py-2">112</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">Intro to JavaScript</td>
+            <td class="border px-4 py-2">Chris</td>
+            <td class="border px-4 py-2">1,280</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
-
-<script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  }
-}
-</script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
