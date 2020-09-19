@@ -10,6 +10,7 @@
       <table class="table-auto overflow-auto w-full">
         <thead class="text-gray-800">
           <tr>
+            <th class="border px-4 py-2">No.</th>
             <th class="border px-4 py-2">Nama Instruktur</th>
             <th class="border px-4 py-2">Jam Pelatihan</th>
             <th class="border px-4 py-2">Senin</th>
@@ -23,7 +24,10 @@
         <tbody class="text-gray-700">
           <!-- display rows -->
           <template v-if="inputSchedules.length > 0">
-            <tr v-for="row in inputSchedules" :key="row.id">
+            <tr v-for="(row, index) in inputSchedules" :key="row.id">
+              <td class="border px-4 py-2">
+                <p class="mt-1 w-full">{{ index + 1 }}</p>
+              </td>
               <td class="border px-4 py-2">
                 <p class="mt-1 w-full">{{ row.name }}</p>
               </td>
@@ -65,6 +69,7 @@
 
           <!-- input row -->
           <tr>
+            <td class="border px-4 py-2"></td>
             <td class="border px-4 py-2">
               <input
                 v-model="newSchedule.name"
