@@ -189,9 +189,15 @@
           </button>
           <button
             class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
-            @click="makeSchedule"
+            @click="makeSchedule(false)"
           >
             Buat jadwal minggu depan
+          </button>
+          <button
+            class="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700"
+            @click="makeSchedule(true)"
+          >
+            Demo
           </button>
         </div>
       </div>
@@ -350,8 +356,6 @@ export default {
         saturday: false
       }
     }
-
-    this.populate()
   },
   methods: {
     addRow() {
@@ -417,7 +421,10 @@ export default {
       arr.map((e) => (count += e.hour))
       return count
     },
-    makeSchedule() {
+    makeSchedule(populate) {
+      if (populate) {
+        this.populate()
+      }
       // pilih random array
       // sampai ketemu >= 48 jam
       // yang sudah 48, keluarkan dari array
