@@ -1,7 +1,9 @@
 <template>
   <div class="max-w-6xl mx-auto p-4">
     <div class="text-center pt-10 pb-5">
-      <h1 class="text-green-500 font-bold text-5xl">Smart Schedule System</h1>
+      <h1 class="text-green-500 font-bold text-5xl">
+        Smart Schedule System <span class="text-red-500">(Unfinished)</span>
+      </h1>
     </div>
     <div class="py-4">
       <div class="py-4">
@@ -390,7 +392,7 @@ export default {
     }
   },
   head: {
-    title: 'Smart Schedule System',
+    title: 'Smart Schedule System (Unfinished)',
     description: 'Penjadwalan otomatis dengan JavaScript.'
   }
 }
