@@ -165,12 +165,6 @@
               </select>
             </td>
           </tr>
-
-          <tr v-else>
-            <p>
-              Total jam sudah lebih dari 60 jam
-            </p>
-          </tr>
         </tbody>
       </table>
       <div class="mt-4 flex justify-between items-start">
