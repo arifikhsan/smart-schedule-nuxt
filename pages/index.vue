@@ -169,8 +169,6 @@
           </tr> -->
         </tbody>
       </table>
-      <div>newSchedule: {{ newSchedule }}</div>
-      <div>inputSchedules: {{ inputSchedules }}</div>
       <div class="mt-4 flex justify-end">
         <button
           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
@@ -181,7 +179,7 @@
       </div>
     </div>
 
-    <!-- <div class="py-4">
+    <div class="py-4">
       <div class="py-4">
         <h2 class="text-green-500 font-medium text-2xl">Form Hasil</h2>
       </div>
@@ -199,9 +197,9 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="item in form" :key="item.name">
-            <td class="border px-4 py-2">{{ item.name }}</td>
-            <td class="border px-4 py-2">{{ item.hour }}</td>
+          <tr v-for="row in inputSchedules" :key="row.name">
+            <td class="border px-4 py-2">{{ row.name }}</td>
+            <td class="border px-4 py-2">{{ row.hour }}</td>
             <td class="border px-4 py-2">?</td>
             <td class="border px-4 py-2">?</td>
             <td class="border px-4 py-2">?</td>
@@ -211,7 +209,7 @@
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div>
   </div>
 </template>
 
