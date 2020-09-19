@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-6xl p-4 mx-auto">
+  <div class="max-w-6xl p-4 pb-20 mx-auto">
     <div class="pt-10 pb-5 text-center">
       <h1 class="text-5xl font-bold text-green-500">
         Smart Scheduling System <span class="text-red-500">(Unfinished)</span>
@@ -230,6 +230,11 @@
           </tr>
         </tbody>
       </table>
+      <div class="flex items-start justify-start mt-4">
+        <div class="flex flex-col justify-start">
+          <p>Total jam: 48 Jam</p>
+        </div>
+      </div>
     </div>
 
     <!-- next week postponed -->
