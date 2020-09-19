@@ -218,7 +218,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="row in inputSchedules" :key="row.id">
+          <tr v-for="row in nextWeekSchedules" :key="row.id">
             <td class="px-4 py-2 border">{{ row.name }}</td>
             <td class="px-4 py-2 border">{{ row.hour }}</td>
             <td class="px-4 py-2 border">?</td>
@@ -232,7 +232,7 @@
       </table>
       <div class="flex items-start justify-start mt-4">
         <div class="flex flex-col justify-start">
-          <p>Total jam: 48 Jam</p>
+          <p>Total jam: {{ nextWeekHourCount() }} Jam</p>
         </div>
       </div>
     </div>
@@ -258,7 +258,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="row in inputSchedules" :key="row.id">
+          <tr v-for="row in nextWeekPostponedSchedules" :key="row.id">
             <td class="px-4 py-2 border">{{ row.name }}</td>
             <td class="px-4 py-2 border">{{ row.hour }}</td>
             <td class="px-4 py-2 border">?</td>
@@ -270,6 +270,11 @@
           </tr>
         </tbody>
       </table>
+      <div class="flex items-start justify-start mt-4">
+        <div class="flex flex-col justify-start">
+          <p>Total jam: {{ nextWeekPostponedHourCount() }} Jam</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -325,7 +330,7 @@ export default {
       }
     }
 
-    // this.populate()
+    this.populate()
   },
   methods: {
     addRow() {
@@ -376,6 +381,16 @@ export default {
       this.inputSchedules.map((e) => (count += e.hour))
       return count
     },
+    nextWeekHourCount() {
+      let count = 0
+      this.nextWeekSchedules.map((e) => (count += e.hour))
+      return count
+    },
+    nextWeekPostponedHourCount() {
+      let count = 0
+      this.nextWeekPostponedSchedules.map((e) => (count += e.hour))
+      return count
+    },
     countHourInSchedule(arr) {
       let count = 0
       arr.map((e) => (count += e.hour))
@@ -383,11 +398,48 @@ export default {
     },
     makeSchedule() {
       // pilih random array
-      // sampai ketemu 48 jam
+      // sampai ketemu >= 48 jam
       // yang sudah 48, keluarkan dari array
-      // const maxHour = 48
-      // let currentHour = 0
-      // const currentSchedules = { ...this.inputSchedules }
+
+      const maxHour = 48
+      let nextWeekHour = 0
+      const nextWeekSchedules = []
+      const currentSchedules = this.inputSchedules
+      // console.log(currentSchedules)
+
+      // cari jadwal sampai angka >= 48 jam
+
+      for (const schedule of currentSchedules) {
+        nextWeekHour += schedule.hour
+        nextWeekSchedules.push(schedule)
+        if (nextWeekHour >= maxHour) {
+          break
+        }
+      }
+
+      if (nextWeekHour === maxHour) {
+        this.nextWeekSchedules = nextWeekSchedules
+      } else {
+        // kurangi satu jika ada 49
+        const offsetSchedules = nextWeekSchedules.filter((e) => e.hour === 1)
+        // cari yang terakhir
+        const offsetSchedule = offsetSchedules[offsetSchedules.length - 1]
+        // console.log(nextWeekHour)
+        // console.log(offsetSchedules)
+        // console.log(offsetSchedule)
+
+        nextWeekSchedules.splice(nextWeekSchedules.indexOf(offsetSchedule, 1))
+        this.nextWeekSchedules = nextWeekSchedules
+      }
+
+      // cari jadwal minggu tertunda
+
+      const remainingSchedules = this.inputSchedules.filter(
+        (e) => !this.nextWeekSchedules.includes(e)
+      )
+      // console.log(remainingSchedules)
+      this.nextWeekPostponedSchedules = remainingSchedules
+
       // const randomSchedules = []
       // while (currentHour !== maxHour) {
       //   for (let index = 0; index < currentSchedules.length; index++) {
