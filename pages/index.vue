@@ -1,68 +1,68 @@
 <template>
-  <div class="max-w-6xl mx-auto p-4">
-    <div class="text-center pt-10 pb-5">
-      <h1 class="text-green-500 font-bold text-5xl">
-        Smart Schedule System <span class="text-red-500">(Unfinished)</span>
+  <div class="max-w-6xl p-4 mx-auto">
+    <div class="pt-10 pb-5 text-center">
+      <h1 class="text-5xl font-bold text-green-500">
+        Smart Scheduling System <span class="text-red-500">(Unfinished)</span>
       </h1>
     </div>
     <div class="py-4">
       <div class="py-4">
-        <h2 class="text-green-500 font-medium text-2xl">Form Isian</h2>
+        <h2 class="text-2xl font-medium text-green-500">Form Isian</h2>
       </div>
-      <table class="table-auto overflow-auto w-full">
+      <table class="w-full overflow-auto table-auto">
         <thead class="text-gray-800">
           <tr>
-            <th class="border px-4 py-2">No.</th>
-            <th class="border px-4 py-2">Nama Instruktur</th>
-            <th class="border px-4 py-2">Jam Pelatihan</th>
-            <th class="border px-4 py-2">Senin</th>
-            <th class="border px-4 py-2">Selasa</th>
-            <th class="border px-4 py-2">Rabu</th>
-            <th class="border px-4 py-2">Kamis</th>
-            <th class="border px-4 py-2">Jumat</th>
-            <th class="border px-4 py-2">Sabtu</th>
+            <th class="px-4 py-2 border">No.</th>
+            <th class="px-4 py-2 border">Nama Instruktur</th>
+            <th class="px-4 py-2 border">Jam Pelatihan</th>
+            <th class="px-4 py-2 border">Senin</th>
+            <th class="px-4 py-2 border">Selasa</th>
+            <th class="px-4 py-2 border">Rabu</th>
+            <th class="px-4 py-2 border">Kamis</th>
+            <th class="px-4 py-2 border">Jumat</th>
+            <th class="px-4 py-2 border">Sabtu</th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
           <!-- display rows -->
           <template v-if="inputSchedules.length > 0">
             <tr v-for="(row, index) in inputSchedules" :key="row.id">
-              <td class="border px-4 py-2">
-                <p class="mt-1 w-full">{{ index + 1 }}</p>
+              <td class="px-4 py-2 border">
+                <p class="w-full mt-1">{{ index + 1 }}</p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 w-full">{{ row.name }}</p>
+              <td class="px-4 py-2 border">
+                <p class="w-full mt-1">{{ row.name }}</p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 w-full">{{ row.hour }}</p>
+              <td class="px-4 py-2 border">
+                <p class="w-full mt-1">{{ row.hour }}</p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.monday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.tuesday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.wednesday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.thursday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.friday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
-              <td class="border px-4 py-2">
-                <p class="mt-1 block w-full">
+              <td class="px-4 py-2 border">
+                <p class="block w-full mt-1">
                   {{ row.days.saturday ? 'Ya' : 'Tidak' }}
                 </p>
               </td>
@@ -71,27 +71,32 @@
 
           <!-- input row -->
           <tr v-if="currentInputScheduleTimeLength() <= 60">
-            <td class="border px-4 py-2"></td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border"></td>
+            <td class="px-4 py-2 border">
               <input
                 v-model="newSchedule.name"
-                class="form-input mt-1 block w-full"
+                class="block w-full mt-1 form-input"
                 placeholder="Nama"
                 type="text"
               />
             </td>
-            <td class="border px-4 py-2">
-              <input
+            <td class="px-4 py-2 border">
+              <select
                 v-model="newSchedule.hour"
-                class="form-input mt-1 block w-full"
-                placeholder="Jam"
-                type="number"
-              />
+                class="block w-full mt-1 form-select"
+              >
+                <option
+                  v-for="option in hourOptions"
+                  :key="option.text"
+                  :value="option.value"
+                  >{{ option.text }}
+                </option>
+              </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.monday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -101,10 +106,10 @@
                 </option>
               </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.tuesday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -114,10 +119,10 @@
                 </option>
               </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.wednesday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -127,10 +132,10 @@
                 </option>
               </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.thursday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -140,10 +145,10 @@
                 </option>
               </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.friday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -153,10 +158,10 @@
                 </option>
               </select>
             </td>
-            <td class="border px-4 py-2">
+            <td class="px-4 py-2 border">
               <select
                 v-model="newSchedule.days.saturday"
-                class="form-select mt-1 block w-full"
+                class="block w-full mt-1 form-select"
               >
                 <option
                   v-for="option in dayOptions"
@@ -169,21 +174,21 @@
           </tr>
         </tbody>
       </table>
-      <div class="mt-4 flex justify-between items-start">
-        <div class="flex justify-start flex-col">
+      <div class="flex items-start justify-between mt-4">
+        <div class="flex flex-col justify-start">
           <p>Total jam: {{ currentInputScheduleTimeLength() }}</p>
           <p>Maksimal jam: 60/61/62</p>
         </div>
         <div class="flex justify-end space-x-4">
           <button
             v-if="currentInputScheduleTimeLength() <= 60"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
             @click="addRow"
           >
             Selesai dan tambah jadwal
           </button>
           <button
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
             @click="makeSchedule"
           >
             Buat jadwal minggu depan
@@ -195,33 +200,33 @@
     <!-- next week -->
     <div class="py-4">
       <div class="py-4">
-        <h2 class="text-green-500 font-medium text-2xl">
-          Form Jadwal Minggu Depan
+        <h2 class="text-2xl font-medium text-green-500">
+          Jadwal Minggu Depan
         </h2>
       </div>
-      <table class="table-auto w-full">
+      <table class="w-full table-auto">
         <thead class="text-gray-800">
           <tr>
-            <th class="border px-4 py-2">Nama Instruktur</th>
-            <th class="border px-4 py-2">Jam Pelatihan</th>
-            <th class="border px-4 py-2">Senin</th>
-            <th class="border px-4 py-2">Selasa</th>
-            <th class="border px-4 py-2">Rabu</th>
-            <th class="border px-4 py-2">Kamis</th>
-            <th class="border px-4 py-2">Jumat</th>
-            <th class="border px-4 py-2">Sabtu</th>
+            <th class="px-4 py-2 border">Nama Instruktur</th>
+            <th class="px-4 py-2 border">Jam Pelatihan</th>
+            <th class="px-4 py-2 border">Senin</th>
+            <th class="px-4 py-2 border">Selasa</th>
+            <th class="px-4 py-2 border">Rabu</th>
+            <th class="px-4 py-2 border">Kamis</th>
+            <th class="px-4 py-2 border">Jumat</th>
+            <th class="px-4 py-2 border">Sabtu</th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
           <tr v-for="row in inputSchedules" :key="row.id">
-            <td class="border px-4 py-2">{{ row.name }}</td>
-            <td class="border px-4 py-2">{{ row.hour }}</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
+            <td class="px-4 py-2 border">{{ row.name }}</td>
+            <td class="px-4 py-2 border">{{ row.hour }}</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
           </tr>
         </tbody>
       </table>
@@ -230,33 +235,33 @@
     <!-- next week postponed -->
     <div class="py-4">
       <div class="py-4">
-        <h2 class="text-green-500 font-medium text-2xl">
-          Form Jadwal Minggu Depan (Tertunda)
+        <h2 class="text-2xl font-medium text-green-500">
+          Jadwal Minggu Depan (Tertunda)
         </h2>
       </div>
-      <table class="table-auto w-full">
+      <table class="w-full table-auto">
         <thead class="text-gray-800">
           <tr>
-            <th class="border px-4 py-2">Nama Instruktur</th>
-            <th class="border px-4 py-2">Jam Pelatihan</th>
-            <th class="border px-4 py-2">Senin</th>
-            <th class="border px-4 py-2">Selasa</th>
-            <th class="border px-4 py-2">Rabu</th>
-            <th class="border px-4 py-2">Kamis</th>
-            <th class="border px-4 py-2">Jumat</th>
-            <th class="border px-4 py-2">Sabtu</th>
+            <th class="px-4 py-2 border">Nama Instruktur</th>
+            <th class="px-4 py-2 border">Jam Pelatihan</th>
+            <th class="px-4 py-2 border">Senin</th>
+            <th class="px-4 py-2 border">Selasa</th>
+            <th class="px-4 py-2 border">Rabu</th>
+            <th class="px-4 py-2 border">Kamis</th>
+            <th class="px-4 py-2 border">Jumat</th>
+            <th class="px-4 py-2 border">Sabtu</th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
           <tr v-for="row in inputSchedules" :key="row.id">
-            <td class="border px-4 py-2">{{ row.name }}</td>
-            <td class="border px-4 py-2">{{ row.hour }}</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
-            <td class="border px-4 py-2">?</td>
+            <td class="px-4 py-2 border">{{ row.name }}</td>
+            <td class="px-4 py-2 border">{{ row.hour }}</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
+            <td class="px-4 py-2 border">?</td>
           </tr>
         </tbody>
       </table>
@@ -272,6 +277,11 @@ export default {
     return {
       totalHour: 61,
       done: false,
+      hourOptions: [
+        { text: '1 Jam', value: 1 },
+        { text: '2 Jam', value: 2 },
+        { text: '3 Jam', value: 3 }
+      ],
       dayOptions: [
         { text: 'Ya', value: true },
         { text: 'Tidak', value: false }
@@ -279,7 +289,7 @@ export default {
       defaultSchedule: {
         id: 0,
         name: '',
-        hour: 0,
+        hour: 1,
         days: {
           monday: false,
           tuesday: false,
@@ -299,7 +309,7 @@ export default {
     this.newSchedule = {
       id: 0,
       name: '',
-      hour: 0,
+      hour: 1,
       days: {
         monday: false,
         tuesday: false,
@@ -321,7 +331,7 @@ export default {
       this.newSchedule = {
         id: 0,
         name: '',
-        hour: 0,
+        hour: 1,
         days: {
           monday: false,
           tuesday: false,
@@ -392,7 +402,7 @@ export default {
     }
   },
   head: {
-    title: 'Smart Schedule System (Unfinished)',
+    title: 'Smart Scheduling System (Unfinished)',
     description: 'Penjadwalan otomatis dengan JavaScript.'
   }
 }
