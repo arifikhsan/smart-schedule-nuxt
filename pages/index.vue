@@ -419,6 +419,11 @@ export default {
       return count
     },
     makeSchedule() {
+      this.nextWeekSchedules = []
+      this.nextWeekPostponedSchedules = []
+      this.nextWeekHour = 0
+      this.nextWeekPostponedHour = 0
+
       const currentSchedules = [...this.inputSchedules]
       const outputSchedules = []
       // let totalTeachingHours = 0
@@ -445,13 +450,13 @@ export default {
         // do {
 
         if (hours < 48) {
-          if (s.days[0]) {
+          if (s.days[0] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               mo.push(s.name)
             }
           }
-        } else if (s.days[0]) {
+        } else if (s.days[0] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             moNext.push(s.name)
@@ -459,13 +464,13 @@ export default {
         }
 
         if (hours < 48) {
-          if (s.days[1]) {
+          if (s.days[1] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               tu.push(s.name)
             }
           }
-        } else if (s.days[1]) {
+        } else if (s.days[1] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             tuNext.push(s.name)
@@ -473,13 +478,13 @@ export default {
         }
 
         if (hours < 48) {
-          if (s.days[2]) {
+          if (s.days[2] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               we.push(s.name)
             }
           }
-        } else if (s.days[2]) {
+        } else if (s.days[2] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             weNext.push(s.name)
@@ -487,13 +492,13 @@ export default {
         }
 
         if (hours < 48) {
-          if (s.days[3]) {
+          if (s.days[3] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               th.push(s.name)
             }
           }
-        } else if (s.days[3]) {
+        } else if (s.days[3] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             thNext.push(s.name)
@@ -501,13 +506,13 @@ export default {
         }
 
         if (hours < 48) {
-          if (s.days[4]) {
+          if (s.days[4] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               fr.push(s.name)
             }
           }
-        } else if (s.days[4]) {
+        } else if (s.days[4] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             frNext.push(s.name)
@@ -515,13 +520,13 @@ export default {
         }
 
         if (hours < 48) {
-          if (s.days[5]) {
+          if (s.days[5] && !mo.includes(s.name)) {
             hours += s.hour
             for (let i = 0; i < s.hour; i++) {
               sa.push(s.name)
             }
           }
-        } else if (s.days[5]) {
+        } else if (s.days[5] && !mo.includes(s.name)) {
           hours += s.hour
           for (let i = 0; i < s.hour; i++) {
             saNext.push(s.name)
