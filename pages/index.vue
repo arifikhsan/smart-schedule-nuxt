@@ -70,7 +70,7 @@
           </template>
 
           <!-- input row -->
-          <tr v-if="currentInputScheduleTimeLength() <= 60">
+          <tr v-if="currentInputScheduleTimeLength() < 60">
             <td class="px-4 py-2 border"></td>
             <td class="px-4 py-2 border">
               <input
@@ -89,7 +89,8 @@
                   v-for="option in hourOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -102,7 +103,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -115,7 +117,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -128,7 +131,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -141,7 +145,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -154,7 +159,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -167,7 +173,8 @@
                   v-for="option in dayOptions"
                   :key="option.text"
                   :value="option.value"
-                  >{{ option.text }}
+                >
+                  {{ option.text }}
                 </option>
               </select>
             </td>
@@ -181,7 +188,7 @@
         </div>
         <div class="flex justify-end space-x-4">
           <button
-            v-if="currentInputScheduleTimeLength() <= 60"
+            v-if="currentInputScheduleTimeLength() < 60"
             class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
             @click="addRow"
           >
@@ -189,15 +196,15 @@
           </button>
           <button
             class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
-            @click="makeSchedule(false)"
+            @click="makeSchedule"
           >
             Buat jadwal minggu depan
           </button>
           <button
             class="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-700"
-            @click="makeSchedule(true)"
+            @click="populate"
           >
-            Demo
+            Buat data demo
           </button>
         </div>
       </div>
@@ -206,9 +213,7 @@
     <!-- next week -->
     <div class="py-4">
       <div class="py-4">
-        <h2 class="text-2xl font-medium text-green-500">
-          Jadwal Minggu Depan
-        </h2>
+        <h2 class="text-2xl font-medium text-green-500">Jadwal Minggu Depan</h2>
       </div>
       <table class="w-full table-auto">
         <thead class="text-gray-800">
@@ -305,6 +310,7 @@
 </template>
 
 <script>
+import faker from 'faker'
 /* eslint-disable no-unused-vars */
 
 export default {
@@ -315,11 +321,11 @@ export default {
       hourOptions: [
         { text: '1 Jam', value: 1 },
         { text: '2 Jam', value: 2 },
-        { text: '3 Jam', value: 3 }
+        { text: '3 Jam', value: 3 },
       ],
       dayOptions: [
         { text: 'Ya', value: true },
-        { text: 'Tidak', value: false }
+        { text: 'Tidak', value: false },
       ],
       defaultSchedule: {
         id: 0,
@@ -331,15 +337,15 @@ export default {
           wednesday: false,
           thursday: false,
           friday: false,
-          saturday: false
-        }
+          saturday: false,
+        },
       },
       newSchedule: {},
       inputSchedules: [],
       nextWeekSchedules: [],
       nextWeekPostponedSchedules: [],
       nextWeekSchedulesInTable: [],
-      nextWeekPostponedSchedulesInTable: []
+      nextWeekPostponedSchedulesInTable: [],
     }
   },
   created() {
@@ -353,8 +359,8 @@ export default {
         wednesday: false,
         thursday: false,
         friday: false,
-        saturday: false
-      }
+        saturday: false,
+      },
     }
   },
   methods: {
@@ -373,16 +379,18 @@ export default {
           wednesday: false,
           thursday: false,
           friday: false,
-          saturday: false
-        }
+          saturday: false,
+        },
       }
       this.inputSchedules.push(copyNewSchedule)
     },
     populate() {
-      for (let index = 1; index <= 35; index++) {
+      this.inputSchedules = []
+      let index = 0
+      while (this.currentInputScheduleTimeLength() < 60) {
         this.inputSchedules.push({
           id: index,
-          name: `Instruktur ${index}`,
+          name: faker.name.findName(),
           hour: this.randomHour(),
           days: {
             monday: this.randomBoolean(),
@@ -390,16 +398,17 @@ export default {
             wednesday: this.randomBoolean(),
             thursday: this.randomBoolean(),
             friday: this.randomBoolean(),
-            saturday: this.randomBoolean()
-          }
+            saturday: this.randomBoolean(),
+          },
         })
+        index++
       }
     },
     randomHour() {
-      return Math.floor(Math.random() * 3) + 1
+      return Math.floor(Math.random() * 3) + 1 // 1 ~ 3
     },
     randomBoolean() {
-      return Math.random() >= 0.5
+      return Math.random() >= 0.5 // true || false
     },
     currentInputScheduleTimeLength() {
       let count = 0
@@ -421,10 +430,7 @@ export default {
       arr.map((e) => (count += e.hour))
       return count
     },
-    makeSchedule(populate) {
-      if (populate) {
-        this.populate()
-      }
+    makeSchedule() {
       // pilih random array
       // sampai ketemu >= 48 jam
       // yang sudah 48, keluarkan dari array
@@ -548,16 +554,16 @@ export default {
           wednesday: 'Not Implemented Error',
           thursday: 'Not Implemented Error',
           friday: 'Not Implemented Error',
-          saturday: 'Not Implemented Error'
+          saturday: 'Not Implemented Error',
         }
         this.nextWeekSchedulesInTable.push(dailySchedule)
         this.nextWeekPostponedSchedulesInTable.push(dailySchedule)
       }
-    }
+    },
   },
   head: {
     title: 'Smart Scheduling System (Unfinished)',
-    description: 'Penjadwalan otomatis dengan JavaScript.'
-  }
+    description: 'Penjadwalan otomatis dengan JavaScript.',
+  },
 }
 </script>
