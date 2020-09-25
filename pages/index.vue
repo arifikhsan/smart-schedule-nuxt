@@ -208,23 +208,23 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr v-for="schedule in nextWeekSchedulesInTable" :key="schedule.id">
+          <tr v-for="schedule in nextWeekSchedules" :key="schedule.id">
             <td class="px-4 py-2 border">
               {{ schedule.range }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.monday }}</td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.mo }}</td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.tuesday }}
+              {{ schedule.tu }}
             </td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.wednesday }}
+              {{ schedule.we }}
             </td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.thursday }}
+              {{ schedule.th }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.friday }}</td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.fr }}</td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.saturday }}
+              {{ schedule.sa }}
             </td>
           </tr>
         </tbody>
@@ -256,26 +256,23 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr
-            v-for="schedule in nextWeekPostponedSchedulesInTable"
-            :key="schedule.id"
-          >
+          <tr v-for="schedule in nextWeekPostponedSchedules" :key="schedule.id">
             <td class="px-4 py-2 border">
               {{ schedule.range }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.monday }}</td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.mo }}</td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.tuesday }}
+              {{ schedule.tu }}
             </td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.wednesday }}
+              {{ schedule.we }}
             </td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.thursday }}
+              {{ schedule.th }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.friday }}</td>
+            <td class="px-4 py-2 text-red-500 border">{{ schedule.fr }}</td>
             <td class="px-4 py-2 text-red-500 border">
-              {{ schedule.saturday }}
+              {{ schedule.sa }}
             </td>
           </tr>
         </tbody>
@@ -317,8 +314,6 @@ export default {
       inputSchedules: [],
       nextWeekSchedules: [],
       nextWeekPostponedSchedules: [],
-      nextWeekSchedulesInTable: [],
-      nextWeekPostponedSchedulesInTable: [],
     }
   },
   created() {
@@ -394,13 +389,13 @@ export default {
       return this.inputSchedules.length
     },
     nextWeekHourCount() {
-      let count = 0
-      this.nextWeekSchedules.map((e) => (count += e.hour))
-      return count
+      let hour = 0
+      // this.nextWeekSchedules.map((e) => (hour += e.name))
+      return hour
     },
     nextWeekPostponedHourCount() {
       let count = 0
-      this.nextWeekPostponedSchedules.map((e) => (count += e.hour))
+      // this.nextWeekPostponedSchedules.map((e) => (count += e.hour))
       return count
     },
     countHourInSchedule(arr) {
@@ -410,51 +405,206 @@ export default {
     },
     makeSchedule() {
       const currentSchedules = [...this.inputSchedules]
-      const nextWeekSchedulesPerPerson = []
-      let totalTeachingHours = 0
+      const outputSchedules = []
+      // let totalTeachingHours = 0
 
-      currentSchedules.forEach((schedule) => {
-        const dailySchedules = []
-        schedule.days.forEach((day) => {
-          const hourlySchedule = []
-          if (day) {
-            for (let index = 1; index <= schedule.hour; index++) {
-              hourlySchedule.push(schedule)
-              totalTeachingHours++
+      // console.log(currentSchedules)
+      const mo = []
+      const tu = []
+      const we = []
+      const th = []
+      const fr = []
+      const sa = []
+
+      const moNext = []
+      const tuNext = []
+      const weNext = []
+      const thNext = []
+      const frNext = []
+      const saNext = []
+
+      let hours = 0
+      currentSchedules.forEach((s) => {
+        // currentSchedules.forEach((s) => {
+        // const o = {}
+        // do {
+
+        if (hours < 48) {
+          if (s.days[0]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              mo.push(s.name)
             }
           }
-          dailySchedules.push(hourlySchedule)
-        })
-        nextWeekSchedulesPerPerson.push(dailySchedules)
+        } else if (s.days[0]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            moNext.push(s.name)
+          }
+        }
+
+        if (hours < 48) {
+          if (s.days[1]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              tu.push(s.name)
+            }
+          }
+        } else if (s.days[1]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            tuNext.push(s.name)
+          }
+        }
+
+        if (hours < 48) {
+          if (s.days[2]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              we.push(s.name)
+            }
+          }
+        } else if (s.days[2]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            weNext.push(s.name)
+          }
+        }
+
+        if (hours < 48) {
+          if (s.days[3]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              th.push(s.name)
+            }
+          }
+        } else if (s.days[3]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            thNext.push(s.name)
+          }
+        }
+
+        if (hours < 48) {
+          if (s.days[4]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              fr.push(s.name)
+            }
+          }
+        } else if (s.days[4]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            frNext.push(s.name)
+          }
+        }
+
+        if (hours < 48) {
+          if (s.days[5]) {
+            hours += s.hour
+            for (let i = 0; i < s.hour; i++) {
+              sa.push(s.name)
+            }
+          }
+        } else if (s.days[5]) {
+          hours += s.hour
+          for (let i = 0; i < s.hour; i++) {
+            saNext.push(s.name)
+          }
+        }
+
+        // } while (hours < )
+
+        // if (s.days[1]) o.t = s.name
+        // if (s.days[2]) o.w = s.name
+        // if (Object.keys(o).length > 0) {
+        //   m.push(o)
+        // }
+        // })
+
+        // console.log(...m)
+        // for (let indexDay = 0; indexDay < 6; indexDay++) {
+
+        // }
       })
+      // console.log(mo)
+      console.log(hours)
+      const max = [
+        mo.length,
+        tu.length,
+        we.length,
+        th.length,
+        fr.length,
+        sa.length,
+      ]
+        .sort()
+        .pop()
+      const maxNext = [
+        moNext.length,
+        tuNext.length,
+        weNext.length,
+        thNext.length,
+        frNext.length,
+        saNext.length,
+      ]
+        .sort()
+        .pop()
 
-      console.log(nextWeekSchedulesPerPerson)
-      console.log(totalTeachingHours)
+      // for (let index = 0; index < 8; index++) {
+      //   const dailySchedule = {
+      //     range: `${initTime.format('H:mm')} - ${initTime
+      //       .add(1, 'hours')
+      //       .format('H:mm')}`,
 
-      const nextWeekSchedulesPerDay = []
-
-      for (let index = 0; index < 6; index++) {
-        const dailySchedules = []
-        nextWeekSchedulesPerPerson.forEach(
-          (schedulePerPerson, indexPerPerson) => {
-            if (indexPerPerson === index) {
-              // const apa = []
-              // console.log(schedulePerPerson)
-              schedulePerPerson.forEach((schedulePerDay, i) => {
-                if (schedulePerDay.length > 1) {
-                  // console.log(schedulePerDay)
-                  dailySchedules.push(schedulePerDay)
-                }
-              })
-              // dailySchedules.push(apa)
-            }
-          }
-        )
-
-        nextWeekSchedulesPerDay.push(dailySchedules)
+      for (let index = 0; index < max; index++) {
+        const initTime = this.$moment('08:00', 'H:mm')
+        this.nextWeekSchedules.push({
+          id: index,
+          range: `${initTime.format('H:mm')} - ${initTime
+            .add(1, 'hours')
+            .format('H:mm')}`,
+          mo: mo.shift(),
+          tu: tu.shift(),
+          we: we.shift(),
+          th: th.shift(),
+          fr: fr.shift(),
+          sa: sa.shift(),
+        })
       }
 
-      console.log(nextWeekSchedulesPerDay)
+      for (let index = 0; index < maxNext; index++) {
+        const initTime = this.$moment('08:00', 'H:mm')
+        this.nextWeekPostponedSchedules.push({
+          id: index,
+          range: `${initTime.format('H:mm')} - ${initTime
+            .add(1, 'hours')
+            .format('H:mm')}`,
+          mo: moNext.shift(),
+          tu: tuNext.shift(),
+          we: weNext.shift(),
+          th: thNext.shift(),
+          fr: frNext.shift(),
+          sa: saNext.shift(),
+        })
+      }
+
+      console.log(this.nextWeekSchedules)
+      console.log(this.nextWeekPostponedSchedules)
+
+      console.log(this.nextWeekSchedules)
+
+      // this.nextWeekSchedules = outputSchedules
+      // this.nextWeekPostponedSchedules =
+
+      // const nextWeek = []
+      // outputSchedules.forEach(s => {
+
+      // })
+      // console.log(outputSchedules)
+
+      // console.log(nextWeekSchedulesPerPerson)
+      // console.log(totalTeachingHours)
+
       // let what = 0
       // nextWeekSchedules.forEach((schedule) => {
       //   schedule.forEach((day) => {})
