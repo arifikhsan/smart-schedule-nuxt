@@ -210,18 +210,18 @@
             <td class="px-4 py-2 border">
               {{ schedule.range }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.mo }}</td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">{{ schedule.mo }}</td>
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.tu }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.we }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.th }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.fr }}</td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">{{ schedule.fr }}</td>
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.sa }}
             </td>
           </tr>
@@ -258,18 +258,18 @@
             <td class="px-4 py-2 border">
               {{ schedule.range }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.mo }}</td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">{{ schedule.mo }}</td>
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.tu }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.we }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.th }}
             </td>
-            <td class="px-4 py-2 text-red-500 border">{{ schedule.fr }}</td>
-            <td class="px-4 py-2 text-red-500 border">
+            <td class="px-4 py-2 text-green-500 border">{{ schedule.fr }}</td>
+            <td class="px-4 py-2 text-green-500 border">
               {{ schedule.sa }}
             </td>
           </tr>
