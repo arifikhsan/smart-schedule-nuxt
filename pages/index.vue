@@ -1,9 +1,7 @@
 <template>
   <div class="max-w-6xl p-4 pb-20 mx-auto">
     <div class="pt-10 pb-5 text-center">
-      <h1 class="text-5xl font-bold text-green-500">
-        Smart Scheduling System <span class="text-red-500">(Unfinished)</span>
-      </h1>
+      <h1 class="text-5xl font-bold text-green-500">Smart Scheduling System</h1>
     </div>
     <div class="py-4">
       <div class="py-4">
@@ -556,8 +554,8 @@ export default {
       //       .add(1, 'hours')
       //       .format('H:mm')}`,
 
+      const initTime = this.$moment('08:00', 'H:mm')
       for (let index = 0; index < max; index++) {
-        const initTime = this.$moment('08:00', 'H:mm')
         this.nextWeekSchedules.push({
           id: index,
           range: `${initTime.format('H:mm')} - ${initTime
@@ -572,11 +570,11 @@ export default {
         })
       }
 
+      const initTimeNext = this.$moment('08:00', 'H:mm')
       for (let index = 0; index < maxNext; index++) {
-        const initTime = this.$moment('08:00', 'H:mm')
         this.nextWeekPostponedSchedules.push({
           id: index,
-          range: `${initTime.format('H:mm')} - ${initTime
+          range: `${initTimeNext.format('H:mm')} - ${initTimeNext
             .add(1, 'hours')
             .format('H:mm')}`,
           mo: moNext.shift(),
@@ -740,7 +738,7 @@ export default {
     },
   },
   head: {
-    title: 'Smart Scheduling System (Unfinished)',
+    title: 'Smart Scheduling System',
     description: 'Penjadwalan otomatis dengan JavaScript.',
   },
 }
