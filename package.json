@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "faker": "^5.1.0",
     "nuxt": "^2.14.5"
   },
   "devDependencies": {
