@@ -312,6 +312,8 @@ export default {
       inputSchedules: [],
       nextWeekSchedules: [],
       nextWeekPostponedSchedules: [],
+      nextWeekHour: 0,
+      nextWeekPostponedHour: 0,
     }
   },
   created() {
@@ -388,13 +390,28 @@ export default {
     },
     nextWeekHourCount() {
       let hour = 0
-      // this.nextWeekSchedules.map((e) => (hour += e.name))
+      this.nextWeekSchedules.forEach((s) => {
+        if (s.mo !== undefined) hour++
+        if (s.tu !== undefined) hour++
+        if (s.we !== undefined) hour++
+        if (s.th !== undefined) hour++
+        if (s.fr !== undefined) hour++
+        if (s.sa !== undefined) hour++
+      })
       return hour
     },
     nextWeekPostponedHourCount() {
-      let count = 0
+      let hour = 0
       // this.nextWeekPostponedSchedules.map((e) => (count += e.hour))
-      return count
+      this.nextWeekPostponedSchedules.forEach((s) => {
+        if (s.mo !== undefined) hour++
+        if (s.tu !== undefined) hour++
+        if (s.we !== undefined) hour++
+        if (s.th !== undefined) hour++
+        if (s.fr !== undefined) hour++
+        if (s.sa !== undefined) hour++
+      })
+      return hour
     },
     countHourInSchedule(arr) {
       let count = 0
