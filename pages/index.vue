@@ -211,7 +211,13 @@
           <tbody class="text-gray-700">
             <tr v-for="(s, id) in dailySchedule" :key="id">
               <td class="px-4 py-2 border">
-                {{ 'schedule.range' }}
+                {{ $moment('08:00', 'HH:mm').add(id, 'hour').format('HH:mm') }}
+                -
+                {{
+                  $moment('08:00', 'HH:mm')
+                    .add(id + 1, 'hour')
+                    .format('HH:mm')
+                }}
               </td>
               <td class="px-4 py-2 text-green-500 border">{{ s[0] }}</td>
               <td class="px-4 py-2 text-green-500 border">
@@ -241,7 +247,7 @@
 </template>
 
 <script>
-// import faker from 'faker'
+import faker from 'faker'
 
 export default {
   data() {
@@ -301,8 +307,8 @@ export default {
       while (this.currentInputScheduleTimeLength() < 60) {
         this.inputSchedules.push({
           id: index,
-          // name: faker.name.findName(),
-          name: `i ${index}`,
+          name: faker.name.findName(),
+          // name: `i ${index}`,
           hour: this.randomHour(),
           days: [
             this.randomBoolean(),
@@ -373,15 +379,14 @@ export default {
 
         week++
         if (week > 1) {
-          console.log('infinite loop aaaaaaaaaa')
-          console.log(week)
-          console.log('bl', bl.length)
-          console.log('currentSchedule', currentSchedule.length)
-          console.log('this.inputSchedules', this.inputSchedules.length)
+          // console.log('infinite loop aaaaaaaaaa')
+          // console.log(week)
+          // console.log('bl', bl.length)
+          // console.log('currentSchedule', currentSchedule.length)
+          // console.log('this.inputSchedules', this.inputSchedules.length)
           break
         }
       }
-
 
       const transpose = (matrix) => {
         const [row] = matrix
