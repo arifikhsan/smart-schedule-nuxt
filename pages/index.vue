@@ -189,106 +189,59 @@
     </div>
 
     <!-- next week -->
-    <!-- <div v-for="schedule in weeklySchedules" class="py-4">
+    <div v-for="(dailySchedule, iw) in weeklySchedules" :key="iw">
       <div class="py-4">
-        <h2 class="text-2xl font-medium text-green-500">Jadwal Minggu Depan</h2>
-      </div>
-      <table class="w-full table-auto">
-        <thead class="text-gray-800">
-          <tr>
-            <th class="px-4 py-2 border">Waktu</th>
-            <th class="px-4 py-2 border">Senin</th>
-            <th class="px-4 py-2 border">Selasa</th>
-            <th class="px-4 py-2 border">Rabu</th>
-            <th class="px-4 py-2 border">Kamis</th>
-            <th class="px-4 py-2 border">Jumat</th>
-            <th class="px-4 py-2 border">Sabtu</th>
-          </tr>
-        </thead>
-        <tbody class="text-gray-700">
-          <tr v-for="schedule in nextWeekSchedules" :key="schedule.id">
-            <td class="px-4 py-2 border">
-              {{ schedule.range }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">{{ schedule.mo }}</td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.tu }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.we }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.th }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">{{ schedule.fr }}</td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.sa }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex items-start justify-start mt-4">
-        <div class="flex flex-col justify-start">
-          <p>Total jam: {{ nextWeekHourCount() }} Jam</p>
+        <div class="py-4">
+          <h2 class="text-2xl font-medium text-green-500">
+            Jadwal Minggu Depan #{{ iw + 1 }}
+          </h2>
+        </div>
+        <table class="w-full table-auto">
+          <thead class="text-gray-800">
+            <tr>
+              <th class="px-4 py-2 border">Waktu</th>
+              <th class="px-4 py-2 border">Senin</th>
+              <th class="px-4 py-2 border">Selasa</th>
+              <th class="px-4 py-2 border">Rabu</th>
+              <th class="px-4 py-2 border">Kamis</th>
+              <th class="px-4 py-2 border">Jumat</th>
+              <th class="px-4 py-2 border">Sabtu</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr v-for="(s, id) in dailySchedule" :key="id">
+              <td class="px-4 py-2 border">
+                {{ 'schedule.range' }}
+              </td>
+              <td class="px-4 py-2 text-green-500 border">{{ s[0] }}</td>
+              <td class="px-4 py-2 text-green-500 border">
+                {{ s[1] }}
+              </td>
+              <td class="px-4 py-2 text-green-500 border">
+                {{ s[2] }}
+              </td>
+              <td class="px-4 py-2 text-green-500 border">
+                {{ s[3] }}
+              </td>
+              <td class="px-4 py-2 text-green-500 border">{{ s[4] }}</td>
+              <td class="px-4 py-2 text-green-500 border">
+                {{ s[5] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex items-start justify-start mt-4">
+          <div class="flex flex-col justify-start">
+            <p>Total jam: {{ nextWeekHourCount(dailySchedule) }} Jam</p>
+          </div>
         </div>
       </div>
-    </div> -->
-
-    <!-- next week postponed -->
-    <!-- <div class="py-4">
-      <div class="py-4">
-        <h2 class="text-2xl font-medium text-green-500">
-          Jadwal Minggu Depan (Tertunda)
-        </h2>
-      </div>
-      <table class="w-full table-auto">
-        <thead class="text-gray-800">
-          <tr>
-            <th class="px-4 py-2 border">Waktu</th>
-            <th class="px-4 py-2 border">Senin</th>
-            <th class="px-4 py-2 border">Selasa</th>
-            <th class="px-4 py-2 border">Rabu</th>
-            <th class="px-4 py-2 border">Kamis</th>
-            <th class="px-4 py-2 border">Jumat</th>
-            <th class="px-4 py-2 border">Sabtu</th>
-          </tr>
-        </thead>
-        <tbody class="text-gray-700">
-          <tr v-for="schedule in nextWeekPostponedSchedules" :key="schedule.id">
-            <td class="px-4 py-2 border">
-              {{ schedule.range }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">{{ schedule.mo }}</td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.tu }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.we }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.th }}
-            </td>
-            <td class="px-4 py-2 text-green-500 border">{{ schedule.fr }}</td>
-            <td class="px-4 py-2 text-green-500 border">
-              {{ schedule.sa }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex items-start justify-start mt-4">
-        <div class="flex flex-col justify-start">
-          <p>Total jam: {{ nextWeekPostponedHourCount() }} Jam</p>
-        </div>
-      </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable prefer-const */
-/* eslint-disable no-unused-vars */
-
-import faker from 'faker'
+// import faker from 'faker'
 
 export default {
   data() {
@@ -349,7 +302,7 @@ export default {
         this.inputSchedules.push({
           id: index,
           // name: faker.name.findName(),
-          name: `instructor ${index}`,
+          name: `i ${index}`,
           hour: this.randomHour(),
           days: [
             this.randomBoolean(),
@@ -372,9 +325,6 @@ export default {
     currentInputScheduleTimeLength() {
       let count = 0
       this.inputSchedules.map((schedule) => {
-        // const hourPerPerson =
-        //   schedule.hour * schedule.days.filter((day) => day === true).length
-        // count += hourPerPerson
         count += schedule.hour
       })
       return count
@@ -385,115 +335,65 @@ export default {
     instructorCount() {
       return this.inputSchedules.length
     },
-    nextWeekHourCount() {
+    nextWeekHourCount(dailySchedule) {
       let hour = 0
-      this.nextWeekSchedules.forEach((s) => {
-        if (s.mo !== undefined) hour++
-        if (s.tu !== undefined) hour++
-        if (s.we !== undefined) hour++
-        if (s.th !== undefined) hour++
-        if (s.fr !== undefined) hour++
-        if (s.sa !== undefined) hour++
+      const a = dailySchedule.filter((e) => !!e)
+      a.forEach((s) => {
+        const b = s.filter((e) => !!e)
+        if (b.length > 1) {
+          hour += b.length
+        }
       })
       return hour
-    },
-    nextWeekPostponedHourCount() {
-      let hour = 0
-      // this.nextWeekPostponedSchedules.map((e) => (count += e.hour))
-      this.nextWeekPostponedSchedules.forEach((s) => {
-        if (s.mo !== undefined) hour++
-        if (s.tu !== undefined) hour++
-        if (s.we !== undefined) hour++
-        if (s.th !== undefined) hour++
-        if (s.fr !== undefined) hour++
-        if (s.sa !== undefined) hour++
-      })
-      return hour
-    },
-    countHourInSchedule(arr) {
-      let count = 0
-      arr.map((e) => (count += e.hour))
-      return count
-    },
-    anySchedulesLeft() {
-      let count = 0
-
-      this.weeklySchedules.forEach((e) => {
-        count += e.length
-      })
-
-      if (count > 0) {
-        return true
-      } else {
-        return false
-      }
     },
     makeSchedule() {
-      this.nextWeekSchedules = []
-      this.nextWeekPostponedSchedules = []
-      this.nextWeekHour = 0
-      this.nextWeekPostponedHour = 0
+      const currentSchedule = [...this.inputSchedules]
+      this.weeklySchedules = []
 
-      const currentSchedules = [...this.inputSchedules]
-      const outputSchedules = []
-      const weekArray = [[], [], [], [], [], []]
+      const bl = []
+      let week = 0
+      while (bl.length < this.inputSchedules.length) {
+        this.weeklySchedules[week] = []
 
-      const dailySchedules = [...weekArray]
+        for (let id = 0; id < 6; id++) {
+          this.weeklySchedules[week][id] = []
+          currentSchedule.forEach((c, ci) => {
+            if (!c.days[id]) return
+            if (bl.includes(c)) return
 
-      for (let index = 0; index < dailySchedules.length; index++) {
-        dailySchedules[index] = this.inputSchedules.filter((schedule) => {
-          // console.log(schedule.days[index])
-          if (schedule.days[index]) return schedule
-        })
-      }
-
-      // console.log(dailySchedules)
-
-      // [[mo, mo], [], [], [], [], []]
-      dailySchedules.forEach((dailySchedule, sixDayIndex) => {
-        let currentHour = 0
-        let weekNum = 0
-        const maxHour = 8
-        // this.weeklySchedules[weekNum] = []
-        // this.weeklySchedules[weekNum][sixDayIndex] = []
-        this.weeklySchedules[sixDayIndex] = []
-
-        // while (dailySchedule.length > 0) {
-        // [mo, mo]
-        for (let index = 0; index < dailySchedule.length; index++) {
-          const schedule = dailySchedule[index]
-
-          if (currentHour + schedule.hour <= 8) {
-            console.log(schedule.name)
-            // if (!this.selectedInstructors.includes(schedule.id)) {
-            for (let i = 0; i < schedule.hour; i++) {
-              this.weeklySchedules[sixDayIndex].push(schedule.name)
+            if (this.weeklySchedules[week][id].length + c.hour <= 8) {
+              for (let ih = 0; ih < c.hour; ih++) {
+                this.weeklySchedules[week][id].push(c.name)
+              }
+              currentSchedule.splice(ci, 1)
+              bl.push(c)
             }
-            currentHour += schedule.hour
-            this.selectedInstructors.push(schedule.id)
-            dailySchedule.splice(dailySchedule.indexOf(schedule), 1)
-            // }
-          }
-
-          if (currentHour === 8) {
-            continue
-            // break
-          }
-
-          // if (dailySchedule.length === 0) {
-          //   break
-          // }
+          })
         }
 
-        //   weekNum++
-        // }
-      })
-      // console.log(this.selectedInstructors)
-      // console.log(dailySchedules)
+        week++
+        if (week > 1) {
+          console.log('infinite loop aaaaaaaaaa')
+          console.log(week)
+          console.log('bl', bl.length)
+          console.log('currentSchedule', currentSchedule.length)
+          console.log('this.inputSchedules', this.inputSchedules.length)
+          break
+        }
+      }
 
-      console.log(this.weeklySchedules)
+
+      const transpose = (matrix) => {
+        const [row] = matrix
+        return row.map((value, column) => matrix.map((row) => row[column]))
+      }
+
+      // console.log(this.weeklySchedules)
+      this.weeklySchedules = this.weeklySchedules.map((w) => transpose(w))
+      // console.log(this.weeklySchedules)
     },
   },
+
   head: {
     title: 'Smart Schedule System',
     description: 'Penjadwalan otomatis dengan JavaScript.',
