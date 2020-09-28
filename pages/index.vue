@@ -173,6 +173,7 @@
             Selesai dan tambah jadwal
           </button>
           <button
+            v-if="currentInputScheduleTimeLength() >= 60"
             class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"
             @click="makeSchedule"
           >
@@ -307,8 +308,8 @@ export default {
       while (this.currentInputScheduleTimeLength() < 60) {
         this.inputSchedules.push({
           id: index,
-          name: faker.name.findName(),
-          // name: `i ${index}`,
+          // name: faker.name.findName(),
+          name: `i ${index}`,
           hour: this.randomHour(),
           days: [
             this.randomBoolean(),
@@ -356,23 +357,22 @@ export default {
       const currentSchedule = [...this.inputSchedules]
       this.weeklySchedules = []
 
-      const bl = []
+      const blacklist = []
       let week = 0
-      while (bl.length < this.inputSchedules.length) {
+      while (blacklist.length <= this.inputSchedules.length) {
         this.weeklySchedules[week] = []
 
-        for (let id = 0; id < 6; id++) {
-          this.weeklySchedules[week][id] = []
-          currentSchedule.forEach((c, ci) => {
-            if (!c.days[id]) return
-            if (bl.includes(c)) return
+        for (let indexDay = 0; indexDay < 6; indexDay++) {
+          this.weeklySchedules[week][indexDay] = []
+          currentSchedule.forEach((c) => {
+            if (!c.days[indexDay]) return
+            if (blacklist.includes(c)) return
 
-            if (this.weeklySchedules[week][id].length + c.hour <= 8) {
-              for (let ih = 0; ih < c.hour; ih++) {
-                this.weeklySchedules[week][id].push(c.name)
+            if (this.weeklySchedules[week][indexDay].length + c.hour <= 8) {
+              for (let indexHour = 0; indexHour < c.hour; indexHour++) {
+                this.weeklySchedules[week][indexDay].push(c.name)
               }
-              currentSchedule.splice(ci, 1)
-              bl.push(c)
+              blacklist.push(c)
             }
           })
         }
@@ -381,12 +381,12 @@ export default {
         if (week > 1) {
           // console.log('infinite loop aaaaaaaaaa')
           // console.log(week)
-          // console.log('bl', bl.length)
-          // console.log('currentSchedule', currentSchedule.length)
-          // console.log('this.inputSchedules', this.inputSchedules.length)
           break
         }
       }
+      // console.log('blacklist', blacklist.length)
+      // console.log('currentSchedule', currentSchedule.length)
+      // console.log('this.inputSchedules', this.inputSchedules.length)
 
       const transpose = (matrix) => {
         const [row] = matrix
