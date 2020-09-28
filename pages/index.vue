@@ -285,7 +285,9 @@
 </template>
 
 <script>
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
+
 import faker from 'faker'
 
 export default {
@@ -436,437 +438,60 @@ export default {
       const outputSchedules = []
       const weekArray = [[], [], [], [], [], []]
 
-      // const mo = currentSchedules.filter((schedule) => schedule.days[0])
-      // const tu = currentSchedules.filter((schedule) => schedule.days[1])
-
       const dailySchedules = [...weekArray]
 
       for (let index = 0; index < dailySchedules.length; index++) {
-        dailySchedules[index] = currentSchedules.filter(
-          (schedule) => schedule.days[index]
-        )
+        dailySchedules[index] = this.inputSchedules.filter((schedule) => {
+          // console.log(schedule.days[index])
+          if (schedule.days[index]) return schedule
+        })
       }
 
-      this.weeklySchedules.push([])
-      this.weeklySchedules[0] = []
-      console.log(dailySchedules)
-      // console.log(this.weeklySchedules)
+      // console.log(dailySchedules)
+
+      // [[mo, mo], [], [], [], [], []]
       dailySchedules.forEach((dailySchedule, sixDayIndex) => {
-        let newWeek = 0
-        // console.log(sixDayIndex)
-        // for (let i = 0; i < sixDayIndex; i++) {
-        // }
-        // console.log(this.weeklySchedules[0])
-        // console.log(this.weeklySchedules[0][sixDayIndex])
-        // console.log(dailySchedule)
+        let currentHour = 0
+        let weekNum = 0
+        const maxHour = 8
+        // this.weeklySchedules[weekNum] = []
+        // this.weeklySchedules[weekNum][sixDayIndex] = []
+        this.weeklySchedules[sixDayIndex] = []
 
-        // console.log(dailySchedule)
-        while (dailySchedule.length > 0) {
-          console.log(dailySchedule)
-          this.weeklySchedules[newWeek][sixDayIndex] = []
-          // console.log(dailySchedule)
-          dailySchedule.map((schedule, indexSchedule) => {
-            // console.log(this.weeklySchedules[newWeek][sixDayIndex])
-            if (
-              this.weeklySchedules[newWeek][sixDayIndex].length +
-                schedule.hour <=
-              8
-            ) {
-              if (!this.selectedInstructors.includes(schedule.id)) {
-                for (let i = 0; i < schedule.hour; i++) {
-                  this.weeklySchedules[newWeek][sixDayIndex].push(schedule.name)
-                }
-                this.selectedInstructors.push(schedule.id)
-              }
-              dailySchedule.splice(dailySchedule.indexOf(schedule), 1)
+        // while (dailySchedule.length > 0) {
+        // [mo, mo]
+        for (let index = 0; index < dailySchedule.length; index++) {
+          const schedule = dailySchedule[index]
+
+          if (currentHour + schedule.hour <= 8) {
+            console.log(schedule.name)
+            // if (!this.selectedInstructors.includes(schedule.id)) {
+            for (let i = 0; i < schedule.hour; i++) {
+              this.weeklySchedules[sixDayIndex].push(schedule.name)
             }
-          })
-          // console.log(dailySchedule.length)
-          newWeek++
+            currentHour += schedule.hour
+            this.selectedInstructors.push(schedule.id)
+            dailySchedule.splice(dailySchedule.indexOf(schedule), 1)
+            // }
+          }
 
-          this.weeklySchedules.push([])
-          // this.weeklySchedules[newWeek] = []
+          if (currentHour === 8) {
+            continue
+            // break
+          }
+
+          // if (dailySchedule.length === 0) {
+          //   break
+          // }
         }
+
+        //   weekNum++
+        // }
       })
-      console.log(dailySchedules)
+      // console.log(this.selectedInstructors)
+      // console.log(dailySchedules)
 
       console.log(this.weeklySchedules)
-
-      // console.log(dailySchedules)
-      // const maxHour = 8
-
-      // while (mo.length > 0) {
-      //   let currentWeek = 0
-      //   let currentHour = 0
-
-      //   console.log(this.outputSchedules[currentWeek])
-
-      //   mo.forEach((schedule) => {
-      //     const { id } = schedule
-
-      //     if (currentHour + schedule.hour <= maxHour) {
-      //       if (!this.selectedInstructors.includes(id)) {
-      //         for (let index = 0; index < schedule.hour; index++) {
-      //           this.outputSchedules[currentWeek].mo.push({
-      //             name: schedule.name,
-      //           })
-      //           currentHour++
-      //         }
-      //         this.selectedInstructors.push(schedule.id)
-      //         mo.splice(mo.indexOf(schedule), 1)
-      //         console.log(currentHour)
-      //       }
-      //     } else {
-      //       currentWeek++
-      //       currentHour = 0
-      //       this.outputSchedules[currentWeek] = { ...weekNotation }
-      //     }
-      //   })
-      // }
-
-      // console.log(mo)
-
-      // // console.log(this.selectedInstructors)
-      // console.log(this.outputSchedules)
-
-      // console.log(tu)
-      // currentSchedules
-
-      // const a = []
-      // const mo = []
-      // const tu = []
-      // const we = []
-      // const th = []
-      // const fr = []
-      // const sa = []
-
-      // const moNext = []
-      // const tuNext = []
-      // const weNext = []
-      // const thNext = []
-      // const frNext = []
-      // const saNext = []
-
-      // let hours = 0
-      // currentSchedules.forEach((s) => {
-      //   const maxHourPerDay = 8
-      //   s.days.forEach((day, i) => {
-      //     let hourPerDay = 0
-      //     if (day) {
-      //       for (let index = 0; index < s.hour; index++) {
-      //         mo.push(s.name)
-      //         hourPerDay++
-      //       }
-      //       inputtedName.push(s.name)
-      //     }
-      //   })
-      // currentSchedules.forEach((s) => {
-      // const o = {}
-      // do {
-
-      // if (hours < 48) {
-      //   if (s.days[0] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       mo.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[0] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     moNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // if (hours < 48) {
-      //   if (s.days[1] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       tu.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[1] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     tuNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // if (hours < 48) {
-      //   if (s.days[2] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       we.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[2] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     weNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // if (hours < 48) {
-      //   if (s.days[3] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       th.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[3] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     thNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // if (hours < 48) {
-      //   if (s.days[4] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       fr.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[4] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     frNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // if (hours < 48) {
-      //   if (s.days[5] && !inputtedName.includes(s.name)) {
-      //     hours += s.hour
-      //     for (let i = 0; i < s.hour; i++) {
-      //       sa.push(s.name)
-      //     }
-      //     inputtedName.push(s.name)
-      //   }
-      // } else if (s.days[5] && !inputtedNameNext.includes(s.name)) {
-      //   hours += s.hour
-      //   for (let i = 0; i < s.hour; i++) {
-      //     saNext.push(s.name)
-      //   }
-      //   inputtedNameNext.push(s.name)
-      // }
-
-      // } while (hours < )
-
-      // if (s.days[1]) o.t = s.name
-      // if (s.days[2]) o.w = s.name
-      // if (Object.keys(o).length > 0) {
-      //   m.push(o)
-      // }
-      // })
-      // })
-
-      // const max = [
-      //   mo.length,
-      //   tu.length,
-      //   we.length,
-      //   th.length,
-      //   fr.length,
-      //   sa.length,
-      // ]
-      //   .sort()
-      //   .pop()
-      // const maxNext = [
-      //   moNext.length,
-      //   tuNext.length,
-      //   weNext.length,
-      //   thNext.length,
-      //   frNext.length,
-      //   saNext.length,
-      // ]
-      //   .sort()
-      //   .pop()
-
-      // const initTime = this.$moment('08:00', 'H:mm')
-      // for (let index = 0; index < max; index++) {
-      //   this.nextWeekSchedules.push({
-      //     id: index,
-      //     range: `${initTime.format('H:mm')} - ${initTime
-      //       .add(1, 'hours')
-      //       .format('H:mm')}`,
-      //     mo: mo.shift(),
-      //     tu: tu.shift(),
-      //     we: we.shift(),
-      //     th: th.shift(),
-      //     fr: fr.shift(),
-      //     sa: sa.shift(),
-      //   })
-      // }
-
-      // const initTimeNext = this.$moment('08:00', 'H:mm')
-      // for (let index = 0; index < maxNext; index++) {
-      //   this.nextWeekPostponedSchedules.push({
-      //     id: index,
-      //     range: `${initTimeNext.format('H:mm')} - ${initTimeNext
-      //       .add(1, 'hours')
-      //       .format('H:mm')}`,
-      //     mo: moNext.shift(),
-      //     tu: tuNext.shift(),
-      //     we: weNext.shift(),
-      //     th: thNext.shift(),
-      //     fr: frNext.shift(),
-      //     sa: saNext.shift(),
-      //   })
-      // }
-
-      // this.nextWeekSchedules = outputSchedules
-      // this.nextWeekPostponedSchedules =
-
-      // const nextWeek = []
-      // outputSchedules.forEach(s => {
-
-      // })
-      // console.log(outputSchedules)
-
-      // console.log(nextWeekSchedulesPerPerson)
-      // console.log(totalTeachingHours)
-
-      // let what = 0
-      // nextWeekSchedules.forEach((schedule) => {
-      //   schedule.forEach((day) => {})
-      // })
-      // pilih random array
-      // sampai ketemu >= 48 jam
-      // yang sudah 48, keluarkan dari array
-
-      // const maxHour = 48
-      // let nextWeekHour = 0
-      // const nextWeekSchedules = []
-      // const currentSchedules = this.inputSchedules
-      // console.log(currentSchedules)
-
-      // cari jadwal sampai angka >= 48 jam
-
-      // for (const schedule of currentSchedules) {
-      //   nextWeekHour += schedule.hour
-      //   nextWeekSchedules.push(schedule)
-      //   if (nextWeekHour >= maxHour) {
-      //     break
-      //   }
-      // }
-
-      // if (nextWeekHour === maxHour) {
-      //   this.nextWeekSchedules = nextWeekSchedules
-      // } else {
-      //   // kurangi satu jika ada 49
-      //   const offsetSchedules = nextWeekSchedules.filter((e) => e.hour === 1)
-      //   // cari yang terakhir
-      //   const offsetSchedule = offsetSchedules[offsetSchedules.length - 1]
-      //   // console.log(nextWeekHour)
-      //   // console.log(offsetSchedules)
-      //   // console.log(offsetSchedule)
-
-      //   nextWeekSchedules.splice(nextWeekSchedules.indexOf(offsetSchedule, 1))
-      //   this.nextWeekSchedules = nextWeekSchedules
-      // }
-
-      // console.log(this.nextWeekSchedules.length)
-
-      // cari jadwal minggu tertunda
-
-      // const remainingSchedules = this.inputSchedules.filter(
-      //   (e) => !this.nextWeekSchedules.includes(e)
-      // )
-      // // console.log(remainingSchedules)
-      // this.nextWeekPostponedSchedules = remainingSchedules
-
-      // console.log(this.nextWeekSchedules)
-      // populate table
-
-      // const copyNextWeekSchedules = [...this.nextWeekSchedules]
-
-      // const mondays = []
-      // const tuesdays = []
-      // const wednesdays = []
-      // const thursdays = []
-      // const fridays = []
-      // const saturdays = []
-
-      // while (copyNextWeekSchedules.length > 0) {
-      //   const schedule = copyNextWeekSchedules.shift()
-
-      //   if (schedule.days.monday) mondays.push(schedule)
-      //   if (schedule.days.tuesday) tuesdays.push(schedule)
-      //   if (schedule.days.wednesday) wednesdays.push(schedule)
-      //   if (schedule.days.thursday) thursdays.push(schedule)
-      //   if (schedule.days.friday) fridays.push(schedule)
-      //   if (schedule.days.saturday) saturdays.push(schedule)
-      // }
-
-      // make table content
-      // const dailySchedules = []
-
-      // let c = 0
-      // thursdays.map((e) => (c += e.hour))
-      // console.log(thursdays)
-      // console.log(c)
-
-      //* cara menaruh jadwalnya gimana
-
-      // const mondaySchedule = []
-      // for (let index = 0; index < 16; index++) {
-      //   const monday = mondays.shift()
-      //   const tuesday = tuesdays.shift()
-      //   const wednesday = wednesdays.shift()
-      //   const thursday = thursdays.shift()
-      //   const friday = fridays.shift()
-      //   const saturday = saturdays.shift()
-
-      //   dailySchedules.push({
-      //     range: 'time range',
-      //     monday: mondays.shift(),
-      //     tuesday: tuesdays.shift(),
-      //     wednesday: wednesdays.shift(),
-      //     thursday: thursdays.shift(),
-      //     friday: fridays.shift(),
-      //     saturday: saturdays.shift()
-      //   })
-      // }
-
-      // console.log(mondays)
-      // console.log(dailySchedules)
-      // this.nextWeekSchedulesInTable = dailySchedules
-
-      // timeRange: `${this.moment('08:00', 'H:mm').format(
-      //       'H:mm'
-      //     )} - ${this.moment('09:00', 'H:mm').format('H:mm')}`,
-      //     monday: schedule.days.monday ? schedule.name : '',
-      //     tuesday: schedule.days.tuesday ? schedule.name : '',
-      //     wednesday: schedule.days.wednesday ? schedule.name : '',
-      //     thursday: schedule.days.thursday ? schedule.name : '',
-      //     friday: schedule.days.friday ? schedule.name : '',
-      //     saturday: schedule.days.saturday ? schedule.name : ''
-
-      // const initTime = this.$moment('08:00', 'H:mm')
-      // for (let index = 0; index < 8; index++) {
-      //   const dailySchedule = {
-      //     range: `${initTime.format('H:mm')} - ${initTime
-      //       .add(1, 'hours')
-      //       .format('H:mm')}`,
-      //     monday: 'Not Implemented Error',
-      //     tuesday: 'Not Implemented Error',
-      //     wednesday: 'Not Implemented Error',
-      //     thursday: 'Not Implemented Error',
-      //     friday: 'Not Implemented Error',
-      //     saturday: 'Not Implemented Error',
-      //   }
-      //   this.nextWeekSchedulesInTable.push(dailySchedule)
-      //   this.nextWeekPostponedSchedulesInTable.push(dailySchedule)
-      // }
     },
   },
   head: {
