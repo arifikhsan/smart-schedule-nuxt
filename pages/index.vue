@@ -308,8 +308,8 @@ export default {
       while (this.currentInputScheduleTimeLength() < 60) {
         this.inputSchedules.push({
           id: index,
-          // name: faker.name.findName(),
-          name: `i ${index}`,
+          name: faker.name.findName(),
+          // name: `i ${index}`,
           hour: this.randomHour(),
           days: [
             this.randomBoolean(),
